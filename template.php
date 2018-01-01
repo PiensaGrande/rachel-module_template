@@ -71,5 +71,20 @@ switch ($lang1) {
 //  since no translation is available.
 
 
+// set manifest overrides
+$manifest_file = dirname(__FILE__) . "/manifest.json";
+if(file_exists($manifest_file)) {
+	$contents = file_get_contents($manifest_file);
+        if ($contents) {
+        	$manifest_overrides = json_decode($contents, true);
+		foreach ($manifest_overrides as $key => $value) {
+			if ($key == "img_web_loc" || $key == "index_web_loc") {
+				$value = $tmpl_dir . "/" . $value;
+			}
+			$templ[$key] = $value;
+		}
+        }
+}
+
 
 ?>
